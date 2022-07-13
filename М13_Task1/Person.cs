@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace М13_Task1
 {
-   
+
     /// <summary>
     /// данные о клиентах
     /// </summary>
-    public class Person : Client, IClient
+    public class Person : Client
     {
         string familyName;         // фамилия
         string firstName;          // имя
@@ -20,32 +20,31 @@ namespace М13_Task1
         public Person(
             string familyName,
             string firstName,
-            string patronymicName,
-            int idForm) : base(idForm)
+            string patronymicName) : base()
         {
             this.familyName = familyName;
             this.firstName = firstName;
             this.patronymicName = patronymicName;
         }
 
-
+       
         public string FamilyName
         {
-            get { return this.familyName; }
-            set { this.familyName = value; }
+            get { return familyName; }
+            set { SetProperty<string>(ref familyName, value, nameof(FamilyName)); }
         }
         public string FirstName
         {
-            get { return this.firstName; }
-            set { this.firstName = value; }
+            get { return firstName; }
+            set { SetProperty<string>(ref firstName, value, nameof(FirstName)); }
         }
         public string PatronymicName
         {
-            get { return this.patronymicName; }
-            set { this.patronymicName = value; }
+            get { return patronymicName; }
+            set { SetProperty<string>(ref patronymicName, value, nameof(PatronymicName)); }
         }
 
-        public string Name()
+        public override string Name()
         {
             return $"{this.FamilyName} " +
                    $"{this.FirstName} " +

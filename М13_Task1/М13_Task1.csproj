@@ -65,7 +65,7 @@
     </Compile>
     <Compile Include="Account.cs" />
     <Compile Include="Businessman.cs" />
-    <Compile Include="Manage.cs" />
+    <Compile Include="BankSystem.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="DepositAccount.cs" />

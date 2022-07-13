@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace М13_Task1
 {
  
-    public class Organization : Client, IClient
+    public class Organization : Client
     {
         string name;               // Название
         string inn;                // налоговый номер
@@ -18,8 +18,7 @@ namespace М13_Task1
         public Organization(
             string name,
             string inn,
-            string representative,
-            int idForm) : base(idForm)
+            string representative) : base()
         {
             this.name = name;
             this.inn = inn;
@@ -30,22 +29,22 @@ namespace М13_Task1
         public string OrganizationName
         {
             get { return this.name; }
-            set { this.name = value; }
+            set { SetProperty<string>(ref name, value, nameof(OrganizationName)); }
         }
 
         public string INN
         {
             get { return this.inn; }
-            set { this.inn = value; }
+            set { SetProperty<string>(ref inn, value, nameof(INN)); }
         }
 
         public string Representative
         {
             get { return this.representative; }
-            set { this.representative = value; }
+            set { SetProperty<string>(ref representative, value, nameof(Representative)); }
         }
 
-        public string Name() { return $"{this.OrganizationName}"; }
+        public override string Name() { return $"{this.OrganizationName} ИНН {this.INN}"; }
 
         public override string ToString()
         {

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Collections.ObjectModel;
 
 namespace М13_Task1
 {
@@ -11,20 +14,20 @@ namespace М13_Task1
         bool TransferContr(T1 get, T1 put, float amount);
     }
 
-    public class Manage: ITransfer<Account>
+    public class BankSystem: ITransfer<Account>, INotifyPropertyChanged
     {
 
-        public List<Client> Clients { get; set; }           //клиенты
+        public ObservableCollection<Client> Clients { get; set; }           //клиенты
         public Dictionary<string, Account> accounts;        // счета
 
         public Client manageClient;                         // касса 
         public Account cash;
 
 
-        public Manage()
+        public BankSystem()
         {
 
-            Clients = new List<Client>();
+            Clients = new ObservableCollection<Client>();
             accounts = new Dictionary<string, Account>();
             manageClient = null;
             cash = null;
@@ -37,10 +40,10 @@ namespace М13_Task1
         /// </summary>
         /// <param name="cForm">номер клиента</param>
         /// <param name="aForm">номер счета</param>
-        public void MakeCash(int cForm, string aForm)
+        public void MakeCash()
         {
-            this.manageClient = new Client(cForm);
-            this.NewAccount(ref this.manageClient, aForm);
+            this.manageClient = new Client();
+            this.NewAccount(ref this.manageClient);
             this.cash = this.manageClient.Accounts[0] as Account;
 
         }
@@ -49,67 +52,72 @@ namespace М13_Task1
         /// <summary>
         /// добавить клиента физ.лицо
         /// </summary>
-        public void NewPersonClient(
+        public Person NewPersonClient(
             string familyName,
             string firstName,
-            string patronymicName,
-            int idForm)
+            string patronymicName)
         {
-            Person person = new Person(familyName, firstName, patronymicName, idForm);
+            Person person = new Person(familyName, firstName, patronymicName);
             Clients.Add(person);
+            OnPropertyChanged("Clients");
+            return person;
+            
         }
 
         /// <summary>
         /// добавить клиента предпринимателя
         /// </summary>
-        public void NewBusinessmanClient(
+        public Businessman NewBusinessmanClient(
             string familyName,
             string firstName,
             string patronymicName,
-            string inn,
-            int idForm)
+            string inn)
         {
             Businessman businessman = new Businessman(
-                familyName, firstName, patronymicName, inn,
-                idForm);
+                familyName, firstName, patronymicName, inn);
             Clients.Add(businessman);
+            return businessman;
         }
 
         /// <summary>
         /// добавить клиента организацию
         /// </summary>
-        public void NewOrganisationClient(
+        public Organization NewOrganisationClient(
             string name,
             string inn,
-            string representative,
-            int idForm)
+            string representative)
         {
-            Organization organization = new Organization(name, inn, representative, idForm);
+            Organization organization = new Organization(name, inn, representative);
             Clients.Add(organization);
+            OnPropertyChanged("Clients");
+            return organization;
+            
         }
 
 
         /// <summary>
         /// новый счет типа Account
         /// </summary>
-        public void NewAccount(ref Client client, string aForm)
+        public Account NewAccount(ref Client client)
         {
-            Account myaccount = new Account(aForm);
+            Account myaccount = new Account();
             client.Accounts.Add(myaccount as IAccount);
             myaccount.Client = client as IClient;
-            accounts.Add(aForm, myaccount);
+            accounts.Add(myaccount.AccountNumber, myaccount);
+            return myaccount;
         }
 
 
         /// <summary>
         /// новый счет типа DepositAccount
         /// </summary>
-        public void NewDepoditAccount(ref Client client, string aForm)
+        public DepositAccount NewDepositAccount(ref Client client)
         {
-            DepositAccount myaccount = new DepositAccount(aForm);
+            DepositAccount myaccount = new DepositAccount();
             client.Accounts.Add(myaccount as IAccount);
             myaccount.Client = client as IClient;
-            accounts.Add(aForm, myaccount);
+            accounts.Add(myaccount.AccountNumber, myaccount);
+            return myaccount;
         }
 
         /// <summary>
@@ -161,6 +169,13 @@ namespace М13_Task1
             return false;
         }
 
+        // INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
 
     }
 }

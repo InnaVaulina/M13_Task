@@ -11,7 +11,7 @@ namespace М13_Task1
 
     public class DepositAccount : Account
     {
-        public DepositAccount(string aFindex) : base(aFindex) { }
+        public DepositAccount() : base() { }
 
 
         /// <summary>

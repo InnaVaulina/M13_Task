@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace М13_Task1
 {
@@ -35,14 +37,23 @@ namespace М13_Task1
         bool CloseAccount();
 
         IClient Client { get; }
+
+        string ToString();
     }
 
 
     /// <summary>
     /// счет клиента
     /// </summary>
-    public class Account : IAccount
+    public class Account : IAccount, INotifyPropertyChanged
     {
+        static int nombering;
+
+        static Account() 
+        {
+            nombering = 0;
+        }
+
         string accountNumber;
         protected string accountVariant;
         DateTime tCreate;
@@ -51,9 +62,11 @@ namespace М13_Task1
         IClient client;
 
 
-        public Account(string aFindex)
+        public Account()
         {
-            accountNumber = aFindex;
+            accountNumber = $"0000{nombering}";
+            accountNumber = accountNumber.Substring(accountNumber.Length - 5);
+            nombering++;
             tCreate = DateTime.Now;
             tClose = default(DateTime);
             balance = 0;
@@ -78,10 +91,14 @@ namespace М13_Task1
         /// <param name="amount">сумма</param>
         public virtual bool PutMoney(IClient other, float amount)
         {
-            //Console.WriteLine("Account:" + this.GetType().ToString());
             if (this.tClose == default(DateTime))
-            { balance += amount; return true; }
+            { 
+                balance += amount;
+                OnPropertyChanged("Balance");
+                return true; 
+            }
             else return false;
+
         }
 
         /// <summary>
@@ -92,7 +109,12 @@ namespace М13_Task1
         {
             bool x = false;
             if (this.tClose == default(DateTime))
-                if (amount <= this.balance) { balance -= amount; x = true; }
+                if (amount <= this.balance) 
+                { 
+                    balance -= amount;
+                    OnPropertyChanged("Balance");
+                    x = true; 
+                }
             return x;
         }
 
@@ -101,7 +123,12 @@ namespace М13_Task1
         /// </summary>
         public bool CloseAccount()
         {
-            if (balance == 0) { tClose = DateTime.Now; return true; }
+            if (balance == 0) 
+            { 
+                tClose = DateTime.Now;
+                OnPropertyChanged("TimeClose");
+                return true; 
+            }
             else return false;
         }
 
@@ -111,5 +138,14 @@ namespace М13_Task1
         {
             return $"Счет: {AccountNumber} ({TimeCreate}, {TimeClose}): {Balance}";
         }
+
+        // INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+
     }
 }

@@ -15,8 +15,7 @@ namespace М13_Task1
             string familyName,
             string firstName,
             string patronymicName,
-            string inn,
-            int idForm) : base(familyName, firstName, patronymicName, idForm)
+            string inn) : base(familyName, firstName, patronymicName)
         { this.inn = inn; }
 
 
@@ -27,7 +26,7 @@ namespace М13_Task1
             set { this.inn = value; }
         }
 
-        public new string Name() { return $"ИП {base.Name()}"; }
+        public override string Name() { return $"ИП {base.Name()}"; }
 
         public override string ToString()
         {

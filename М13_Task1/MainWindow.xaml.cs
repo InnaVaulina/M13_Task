@@ -21,7 +21,7 @@ namespace М13_Task1
     /// </summary>
     public partial class MainWindow : Window
     {
-        Manage bankA = new Manage();
+        BankSystem bankA = new BankSystem();
         Account selected1;
         Account selected2;
          
@@ -32,38 +32,38 @@ namespace М13_Task1
             InitializeComponent();
 
             
-            bankA.NewPersonClient("Иванов", "Иван", "Иванович", 1);
-            bankA.NewPersonClient("Савина", "Анна", "Александровна", 2);
-            bankA.NewPersonClient("Кривчанская", "Наталья", "Игоревна", 3);
+            bankA.NewPersonClient("Иванов", "Иван", "Иванович");
+            bankA.NewPersonClient("Савина", "Анна", "Александровна");
+            bankA.NewPersonClient("Кривчанская", "Наталья", "Игоревна");
             Client x = bankA.Clients[0];
-            bankA.NewAccount(ref x, "00001");
-            bankA.NewDepoditAccount(ref x, "00004");
+            bankA.NewAccount(ref x);
+            bankA.NewDepositAccount(ref x);
             x = bankA.Clients[1];
-            bankA.NewAccount(ref x, "00002");
-            bankA.NewDepoditAccount(ref x, "00005");
+            bankA.NewAccount(ref x);
+            bankA.NewDepositAccount(ref x);
             x = bankA.Clients[2];
-            bankA.NewAccount(ref x, "00003");
-            bankA.NewDepoditAccount(ref x, "00006");
+            bankA.NewAccount(ref x);
+            bankA.NewDepositAccount(ref x);
 
-            bankA.NewBusinessmanClient("Петров", "Петр", "Петрович", "111", 4);
-            bankA.NewBusinessmanClient("Шкарпитный", "Владимир", "Константинович", "111", 5);
+            bankA.NewBusinessmanClient("Петров", "Петр", "Петрович", "111");
+            bankA.NewBusinessmanClient("Шкарпитный", "Владимир", "Константинович", "111");
             x = bankA.Clients[3];
-            bankA.NewAccount(ref x, "00007");
-            bankA.NewDepoditAccount(ref x, "00008");
+            bankA.NewAccount(ref x);
+            bankA.NewDepositAccount(ref x);
             x = bankA.Clients[4];
-            bankA.NewAccount(ref x, "00009");
-            bankA.NewDepoditAccount(ref x, "00010");
+            bankA.NewAccount(ref x);
+            bankA.NewDepositAccount(ref x);
 
-            bankA.NewOrganisationClient("OOO Ромашка", "112", "Романов Роман Романович", 6);
-            bankA.NewOrganisationClient("OOO Лютик", "159", "Лютый Алексей Борисович", 7);
+            bankA.NewOrganisationClient("OOO Ромашка", "112", "Романов Роман Романович");
+            bankA.NewOrganisationClient("OOO Лютик", "159", "Лютый Алексей Борисович");
             x = bankA.Clients[5];
-            bankA.NewAccount(ref x, "00011");
-            bankA.NewDepoditAccount(ref x, "00012");
+            bankA.NewAccount(ref x);
+            bankA.NewDepositAccount(ref x);
             x = bankA.Clients[6];
-            bankA.NewAccount(ref x, "00013");
-            bankA.NewDepoditAccount(ref x, "00014");
+            bankA.NewAccount(ref x);
+            bankA.NewDepositAccount(ref x);
 
-            bankA.MakeCash(0, "00000");
+            bankA.MakeCash();
             
             ClientList.ItemsSource = bankA.Clients;
             
