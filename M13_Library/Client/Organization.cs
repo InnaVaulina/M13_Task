@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace М13_Task1
+namespace M13_Library
 {
- 
+
+
     public class Organization : Client
     {
         string name;               // Название

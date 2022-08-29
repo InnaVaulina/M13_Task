@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace М13_Task1
+namespace M13_Library
 {
-
     /// <summary>
     /// данные о клиентах
     /// </summary>
@@ -27,7 +26,7 @@ namespace М13_Task1
             this.patronymicName = patronymicName;
         }
 
-       
+
         public string FamilyName
         {
             get { return familyName; }
@@ -55,7 +54,7 @@ namespace М13_Task1
 
         public override string ToString()
         {
-            return base.ToString() + 
+            return base.ToString() +
                    $"\n{this.FamilyName} " +
                    $"{this.FirstName} " +
                    $"{this.PatronymicName}";

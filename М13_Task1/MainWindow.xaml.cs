@@ -12,7 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-//using M13__approach;
+using M13_Library;
+
 
 namespace М13_Task1
 {
@@ -68,10 +69,10 @@ namespace М13_Task1
             ClientList.ItemsSource = bankA.Clients;
             
             this.DataContext = bankA;
-            Cash.DataContext = bankA.cash;
-            selected1 = bankA.cash;
-            selected2 = bankA.cash;
-            SourceAccount.Text = bankA.cash.AccountNumber;
+            Cash.DataContext = bankA.Cash;
+            selected1 = bankA.Cash;
+            selected2 = bankA.Cash;
+            SourceAccount.Text = bankA.Cash.AccountNumber;
 
         }
 
@@ -81,7 +82,7 @@ namespace М13_Task1
         {
             float sum = 0;
             if (float.TryParse(Amount1.Text, out sum))
-                bankA.cash.PutMoney(bankA.manageClient as IClient, sum);
+                bankA.Cash.PutMoney(bankA.manageClient as IClient, sum);
             else MessageBox.Show("mistake");
             BindingExpression binding = Cash.GetBindingExpression(TextBlock.TextProperty);
             binding.UpdateTarget();
@@ -133,8 +134,8 @@ namespace М13_Task1
 
         private void ChooseCash_Click(object sender, RoutedEventArgs e)
         {
-            selected1 = bankA.cash;
-            SourceAccount.Text = bankA.cash.AccountNumber;
+            selected1 = bankA.Cash;
+            SourceAccount.Text = bankA.Cash.AccountNumber;
         }
 
        

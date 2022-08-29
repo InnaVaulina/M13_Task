@@ -1,29 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-
-
-namespace М13_Task1
+namespace M13_Library
 {
-
-    public interface IClient
-    {
-        int ClientId { get; }
-        string Name();
- 
-
-    }
-
     /// <summary>
     /// клиент
     /// </summary>
-    public class Client: IClient, INotifyPropertyChanged
+    public class Client : IClient, INotifyPropertyChanged
     {
         static int id;
         static Client()
@@ -34,7 +19,7 @@ namespace М13_Task1
         int clientId;
         string phone;
 
-        public List<IAccount> Accounts { get; set; }
+        public ObservableCollection<IAccount> Accounts { get; set; }
 
         public event Action<string, string> PropertyChange;
 
@@ -46,7 +31,7 @@ namespace М13_Task1
         {
             clientId = id;
             id++;
-            Accounts = new List<IAccount>();
+            Accounts = new ObservableCollection<IAccount>();
             phone = "";
         }
 
@@ -60,17 +45,17 @@ namespace М13_Task1
             }
         }
 
-        public string Phone 
+        public string Phone
         {
             get { return phone; }
-            set { SetProperty<string>(ref phone, value, nameof(Phone)); } 
+            set { SetProperty<string>(ref phone, value, nameof(Phone)); }
         }
 
         public int ClientId { get { return clientId; } }
 
         public virtual string Name() { return "Касса"; }
 
-  
+
 
         /// <summary>
         /// клиент открывает счет
@@ -84,7 +69,7 @@ namespace М13_Task1
 
         public Account this[string nomber]
         {
-            get 
+            get
             {
                 foreach (var account in this.Accounts)
                     if (account.AccountNumber.CompareTo(nomber) == 0)

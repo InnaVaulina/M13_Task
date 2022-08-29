@@ -1,27 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 
-namespace М13_Task1
+namespace M13_Library
 {
-    public interface ITransfer<in T1>
-    {
-        bool TransferContr(T1 get, T1 put, float amount);
-    }
-
-    public class BankSystem: ITransfer<Account>, INotifyPropertyChanged
+    public class BankSystem : ITransfer<Account>, INotifyPropertyChanged
     {
 
         public ObservableCollection<Client> Clients { get; set; }           //клиенты
         public Dictionary<string, Account> accounts;        // счета
 
         public Client manageClient;                         // касса 
-        public Account cash;
+        Account cash;
+
+        public Account Cash
+        {
+            get { return cash; }
+            set { cash = value; OnPropertyChanged("Cash"); }
+        }
 
 
         public BankSystem()
@@ -30,7 +28,7 @@ namespace М13_Task1
             Clients = new ObservableCollection<Client>();
             accounts = new Dictionary<string, Account>();
             manageClient = null;
-            cash = null;
+            Cash = null;
 
         }
 
@@ -44,7 +42,7 @@ namespace М13_Task1
         {
             this.manageClient = new Client();
             this.NewAccount(ref this.manageClient);
-            this.cash = this.manageClient.Accounts[0] as Account;
+            this.Cash = this.manageClient.Accounts[0] as Account;
 
         }
 
@@ -61,7 +59,7 @@ namespace М13_Task1
             Clients.Add(person);
             OnPropertyChanged("Clients");
             return person;
-            
+
         }
 
         /// <summary>
@@ -91,7 +89,7 @@ namespace М13_Task1
             Clients.Add(organization);
             OnPropertyChanged("Clients");
             return organization;
-            
+
         }
 
 
@@ -126,7 +124,7 @@ namespace М13_Task1
         public void CloseAccount(ref Client client, string aForm)
         {
             foreach (Account account in client.Accounts)
-                if (account.AccountNumber.CompareTo(aForm)==0) account.CloseAccount();
+                if (account.AccountNumber.CompareTo(aForm) == 0) account.CloseAccount();
 
         }
 
@@ -159,7 +157,7 @@ namespace М13_Task1
         /// <returns>true в случае успешности перевода</returns>
         public bool TransferContr(Account get, Account put, float amount)
         {
-           
+
             if (get.GetMoney(put.Client, amount))
             {
                 if (put.PutMoney(get.Client, amount)) return true;

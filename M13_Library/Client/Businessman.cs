@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace М13_Task1
+namespace M13_Library
 {
- 
     public class Businessman : Person
     {
         string inn;        // налоговый номер
@@ -33,7 +30,7 @@ namespace М13_Task1
 
             return $"{this.ClientId}:\n" +
                    $"{this.Name()} ИНН {this.INN}";
-                  
+
         }
 
     }

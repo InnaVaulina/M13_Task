@@ -1,47 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace М13_Task1
+namespace M13_Library
 {
-    public interface IVariantCov<out T>
-    {
-        T Account { get; }
-
-    }
-
-    public class VariantCov<T> : IVariantCov<T>
-
-    {
-        public T account;
-        public VariantCov(T x) { account = x; }
-        public T Account { get { return this.account; } }
-
-    }
-
-
-    public interface IAccount
-    {
-        string AccountNumber { get; }
-
-        DateTime TimeCreate { get; }
-
-        DateTime TimeClose { get; }
-
-        float Balance { get; }
-
-        bool CloseAccount();
-
-        IClient Client { get; }
-
-        string ToString();
-    }
-
-
     /// <summary>
     /// счет клиента
     /// </summary>
@@ -49,7 +11,7 @@ namespace М13_Task1
     {
         static int nombering;
 
-        static Account() 
+        static Account()
         {
             nombering = 0;
         }
@@ -83,7 +45,7 @@ namespace М13_Task1
 
         public float Balance { get { return balance; } }
 
-        
+
 
         /// <summary>
         /// положить сумму на счет
@@ -92,10 +54,10 @@ namespace М13_Task1
         public virtual bool PutMoney(IClient other, float amount)
         {
             if (this.tClose == default(DateTime))
-            { 
+            {
                 balance += amount;
                 OnPropertyChanged("Balance");
-                return true; 
+                return true;
             }
             else return false;
 
@@ -109,11 +71,11 @@ namespace М13_Task1
         {
             bool x = false;
             if (this.tClose == default(DateTime))
-                if (amount <= this.balance) 
-                { 
+                if (amount <= this.balance)
+                {
                     balance -= amount;
                     OnPropertyChanged("Balance");
-                    x = true; 
+                    x = true;
                 }
             return x;
         }
@@ -123,11 +85,11 @@ namespace М13_Task1
         /// </summary>
         public bool CloseAccount()
         {
-            if (balance == 0) 
-            { 
+            if (balance == 0)
+            {
                 tClose = DateTime.Now;
                 OnPropertyChanged("TimeClose");
-                return true; 
+                return true;
             }
             else return false;
         }
